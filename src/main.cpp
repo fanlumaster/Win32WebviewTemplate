@@ -29,7 +29,7 @@ UINT WM_SHOW_MAIN_WINDOW;
 UINT WM_HIDE_MAIN_WINDOW;
 UINT WM_MOVE_CANDIDATE_WINDOW;
 
-static TCHAR szWindowClass[] = _T("global_candidate_window");
+static TCHAR szWindowClass[] = _T("Win32WebViewSample");
 static TCHAR szTitle[] = _T("WebView sample");
 
 std::wstring candStr = L"";
@@ -408,6 +408,17 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
         }
         break;
     }
+    case WM_ERASEBKGND: {
+        HDC hdc = (HDC)wParam;
+        RECT rc;
+        GetClientRect(hWnd, &rc);
+
+        HBRUSH darkBrush = CreateSolidBrush(RGB(32, 32, 32)); // 深灰
+        FillRect(hdc, &rc, darkBrush);
+        DeleteObject(darkBrush);
+
+        return 1; // 返回 1 表示我们处理了背景擦除
+    }
     case WM_DESTROY: {
         PostQuitMessage(0);
         break;
@@ -560,17 +571,18 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance,
     // Store instance handle in our global variable
     hInst = hInstance;
 
-    HWND hWnd = CreateWindowEx(WS_EX_LAYERED | WS_EX_TOOLWINDOW | //
-                                   WS_EX_NOACTIVATE |             //
-                                   WS_EX_TOPMOST,                 //
-                               szWindowClass,                     //
-                               L"fanycandidatewindow",            //
-                               WS_POPUP,                          //
-                               100,                               //
-                               100,                               //
-                               (108 + 15) * 1.5,                  //
-                               (246 + 15) * 1.5,                  //
-                               nullptr, nullptr, hInstance, nullptr);
+    HWND hWnd = CreateWindowEx(0,                             //
+                               szWindowClass,                 //
+                               L"Win32WebViewTemplateWindow", //
+                               WS_OVERLAPPEDWINDOW,           //
+                               100,                           //
+                               100,                           //
+                               (108 + 15) * 1.5 * 4,          //
+                               (246 + 15) * 1.5 * 2,          //
+                               nullptr,                       //
+                               nullptr,                       //
+                               hInstance,                     //
+                               nullptr);                      //
 
     if (!hWnd)
     {
@@ -580,7 +592,14 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance,
         return 1;
     }
 
-    // MoveWindow(hWnd, -1000, 100, (108 + 15) * 1.5, (246 + 15) * 1.5, TRUE);
+    BOOL useDarkMode = TRUE;
+    DwmSetWindowAttribute(             //
+        hWnd,                          //
+        DWMWA_USE_IMMERSIVE_DARK_MODE, //
+        &useDarkMode,                  //
+        sizeof(useDarkMode)            //
+    );
+
     ShowWindow(hWnd, SW_SHOW);
     UpdateWindow(hWnd);
 
@@ -595,8 +614,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance,
         {
             ShowWindow(hWnd, state);
             state = state == SW_HIDE ? SW_SHOW : SW_HIDE;
-            MoveWindow(hWnd, 100, 100, (108 + 15) * 1.5, (246 + 15) * 1.5,
-                       TRUE);
+            MoveWindow(hWnd, 100, 100, (108 + 15) * 1.5 * 3,
+                       (246 + 15) * 1.5 * 3, TRUE);
         }
         TranslateMessage(&msg);
         DispatchMessage(&msg);
