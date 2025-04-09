@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Boost
 set(Boost_ROOT "C:/Users/SonnyCalcr/scoop/apps/boost/1.87.0")
 set (Boost_USE_STATIC_LIBS ON)
-find_package(Boost REQUIRED COMPONENTS locale json)
+find_package(Boost REQUIRED COMPONENTS locale)
 
 # fmt and spdlog
 set(CMAKE_PREFIX_PATH "C:/Users/SonnyCalcr/EDisk/CppCodes/Libraries/AllLibs")
@@ -33,7 +33,9 @@ add_definitions(
 include_directories("src/")
 
 set(SRC_FILES
+    "src/common_utils.cpp"
     "src/main.cpp"
+    "src/my_webveiw.cpp"
 )
 
 set(MY_EXECUTABLE_NAME "Win32WebviewTemplate")
@@ -46,4 +48,4 @@ set_target_properties(${MY_EXECUTABLE_NAME} PROPERTIES VS_GLOBAL_WebView2LoaderP
 set_target_properties(${MY_EXECUTABLE_NAME} PROPERTIES VS_USER_PROPS "${CMAKE_SOURCE_DIR}/Demo.props")
 set_target_properties(${MY_EXECUTABLE_NAME} PROPERTIES VS_PACKAGE_REFERENCES "Microsoft.Web.WebView2_1.0.3124.44;Microsoft.Windows.ImplementationLibrary_1.0.240803.1")
 
-target_link_libraries(${MY_EXECUTABLE_NAME} fmt::fmt spdlog::spdlog)
+target_link_libraries(${MY_EXECUTABLE_NAME} fmt::fmt spdlog::spdlog Boost::locale)
