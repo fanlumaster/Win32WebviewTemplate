@@ -31,6 +31,15 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
         DeleteObject(darkBrush);
         return 1;
     }
+    case WM_SIZE: {
+        if (webviewController)
+        {
+            RECT rect;
+            GetClientRect(hWnd, &rect);
+            webviewController->put_Bounds(rect);
+        }
+        break;
+    }
     case WM_DESTROY: {
         PostQuitMessage(0);
         break;
