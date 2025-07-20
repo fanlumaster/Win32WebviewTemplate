@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.25.0)
 project(Win32WebviewTemplate VERSION 1.0)
 
 # Boost
-set(Boost_ROOT "C:/Users/SonnyCalcr/scoop/apps/boost/current")
+set(Boost_ROOT "C:/Users/sonnycalcr/scoop/apps/boost/current")
 set (Boost_USE_STATIC_LIBS ON)
 find_package(Boost REQUIRED COMPONENTS locale)
 include_directories(${Boost_INCLUDE_DIRS})

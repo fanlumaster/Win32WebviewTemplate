@@ -1,7 +1,6 @@
 {
   "dependencies": [
     "fmt",
-    "spdlog",
-    "sqlite3"
+    "spdlog"
   ]
 }
