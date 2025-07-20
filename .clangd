@@ -4,8 +4,7 @@ CompileFlags:
       -D_UNICODE,
       -DFANY_DEBUG,
       "-std=c++17",
-      "-IC:\\Users\\SonnyCalcr\\EDisk\\CppCodes\\Win32Codes\\Win32WebviewTemplate\\includes", # you should replace this to your own include path of this project
-      "-IC:\\Users\\SonnyCalcr\\EDisk\\CppCodes\\Win32Codes\\DirectWriteExperiment\\fmt\\include", # you should replace this to your own include path of fmt
+      "-IC:\\Users\\SonnyCalcr\\EDisk\\CppCodes\\Win32Codes\\Win32WebviewTemplate\\includes",
       "-IC:\\Users\\SonnyCalcr\\.nuget\\packages\\microsoft.web.webview2\\1.0.3124.44\\build\\native\\include",
       "-IC:\\Users\\SonnyCalcr\\.nuget\\packages\\microsoft.windows.implementationlibrary\\1.0.240803.1\\include",
       -Wno-microsoft-goto,
